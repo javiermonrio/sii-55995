@@ -11,7 +11,7 @@ Material docente de la asignatura **Sistemas Informáticos Industriales** de la 
 
 ## 📖 Descripción
 
-Repositorio de practicas de la asignatura de Sistemas Informaticos Industriales de Javier Monrio, 55995.
+Repositorio de practicas de la asignatura de Sistemas Informaticos Industriales de Javier Monrio Garcia, 55995.
 
 ---
 

@@ -17,10 +17,8 @@ Esfera::Esfera()
 
 Esfera::~Esfera()
 {
-
+       
 }
-
-
 
 void Esfera::Dibuja()
 {
@@ -34,5 +32,5 @@ void Esfera::Dibuja()
 
 void Esfera::Mueve(float t)
 {
-
+    centro=centro+velocidad*t;
 }
