@@ -143,6 +143,14 @@ void CMundo::OnTimer(int value)
 		char cad[70];
 		sprintf(cad, "Jugador 2 marca 1 punto, lleva un total de %d puntos.\n", puntos2);
 		write (fd_fifo, cad, strlen(cad));
+		
+		//COMPROBACIÓN DE VICTORIA:
+		if (puntos2>=3){
+		sprintf(cad, "FIN DE LA PARTIDA, GANADOR: Jugador 2\n");
+		write(fd_fifo, cad, strlen(cad));
+		close(fd_fifo);
+		exit(0); //Cierre del programa de tenis completo.
+		}
 	}
 
 	if(fondo_dcho.Rebota(esfera))
@@ -157,6 +165,14 @@ void CMundo::OnTimer(int value)
 		char cad[70];
 		sprintf(cad, "Jugador 1 marca 1 punto, lleva un total de %d puntos.\n", puntos1);
 		write (fd_fifo, cad, strlen(cad));
+		
+		//COMPROBACIÓN DE VICTORIA:
+		if (puntos1>=3){
+		sprintf(cad, "FIN DE LA PARTIDA, GANADOR: Jugador 1\n");
+		write(fd_fifo, cad, strlen(cad));
+		close(fd_fifo);
+		exit(0); //Cierre del programa de tenis completo.
+		}
 	}
 
 }
