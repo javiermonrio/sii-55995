@@ -11,6 +11,8 @@
 #include <math.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/mman.h>
+#include<sys/stat.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -25,6 +27,10 @@ CMundo::~CMundo()
 {
 //Cierre de la tubería FIFO:
 close (fd_fifo);
+
+//cierra el fd del bot
+munmap (pdatos,sizeof(DatosMemCompartida));
+unlink("/tmp/datosBot");
 }
 
 void CMundo::InitGL()
@@ -175,6 +181,14 @@ void CMundo::OnTimer(int value)
 		}
 	}
 
+//lógica bot
+pdatos->esfera   = esfera;
+pdatos->raqueta1 = jugador1;
+
+if (pdatos->accion == 1)       OnKeyboardDown('w', 0, 0);
+else if (pdatos->accion == -1) OnKeyboardDown('s', 0, 0);
+else                           jugador1.velocidad.y = 0;
+
 }
 
 void CMundo::OnKeyboardDown(unsigned char key, int x, int y)
@@ -227,4 +241,13 @@ fd_fifo=open("fifo", O_WRONLY);
 if (fd_fifo<0){
   perror("No puede abrirse el FIFO en el TENIS (el que escribe)");
   }
+ 
+//inicialización del bot
+int fd = open("/tmp/datosBot", O_RDWR | O_CREAT | O_TRUNC, 0666);   // i. crear
+ftruncate(fd, sizeof(DatosMemCompartida));                            // tamaño
+void* proyeccion = mmap(NULL, sizeof(DatosMemCompartida),
+               PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);            // ii. proyectar
+close(fd);                                                            // iii. cerrar
+pdatos = static_cast<DatosMemCompartida*>(proyeccion);                         // iv. asignar
+pdatos->accion = 0;
 }

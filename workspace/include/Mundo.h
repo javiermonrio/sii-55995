@@ -14,6 +14,7 @@
 
 #include "Esfera.h"
 #include "Raqueta.h"
+#include "DatosMemCompartida.h"
 
 class CMundo  
 {
@@ -36,6 +37,8 @@ public:
 
 	int puntos1;
 	int puntos2;
+	
+	DatosMemCompartida* pdatos;
 	
 	int fd_fifo;   //file descriptor de la tubería FIFO
 };
